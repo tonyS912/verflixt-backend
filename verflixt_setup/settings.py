@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_rq',
     'import_export',
     'corsheaders',
+    'video_content',
 ]
 
 MIDDLEWARE = [
@@ -103,6 +104,8 @@ CACHES = {
     }
 }
 
+CACHE_TTL = 60 * 15
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -139,6 +142,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# media files (videos)
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -155,9 +163,17 @@ RQ_QUEUES = {
         'HOST': 'localhost',
         'PORT': 6379,
         'DB': 0,
-        'PASSWORD': 'foobared',
+        # in env.py
         'DEFAULT_TIMEOUT': 360,
     }
 }
 
 RQ_EXCEPTION_HANDLERS = ['path.to.my.handler']  # If you need custom exception handlers
+
+# Django Rest Framework Conf
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ],
+}

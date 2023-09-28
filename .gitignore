@@ -53,6 +53,7 @@ atlassian-ide-plugin.xml
 .Python build/
 develop-eggs/
 dist/
+static/
 downloads/
 eggs/
 .eggs/
@@ -150,3 +151,4 @@ GitHub.sublime-settings
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+/static/

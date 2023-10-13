@@ -9,12 +9,14 @@ class VideoAdmin(ImportExportModelAdmin):
     list_display = (
         "title",
         "created_at",
+        "created_from",
         "description",
     )  # Fields will be shown in list-view
 
     fields = (
         "title",
         "created_at",
+        "created_from",
         "description",
         "video_file",
     )  # Field can be edited

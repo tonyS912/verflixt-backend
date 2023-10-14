@@ -1,7 +1,6 @@
 from django.contrib.auth import logout
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
-from django.http import HttpResponseRedirect
 from rest_framework import status
 
 from rest_framework.permissions import AllowAny
@@ -70,7 +69,7 @@ class ConfirmEmailView(APIView):
     def get(request, token):
         serializer = EmailConfirmSerializer(data={"token": token})
         if serializer.is_valid():
-            return HttpResponseRedirect(os.environ.get("WEB_ADDRESS"))
+            return Response(status=200)
         else:
             return Response({"error": serializer.errors}, status=401)
 
@@ -105,7 +104,7 @@ class PasswordResetView(APIView):
             reset_link = PasswordResetView._create_reset_link(request, user_data['token'])
             email_sender = os.environ.get("EMAIL_SENDER")
             PasswordResetView._send_reset_email(user_data['user'].email, reset_link, email_sender)
-            return Response({"message": "Password reset email was sendet."}, status=status.HTTP_200_OK)
+            return Response({"message": "Password reset email was sent."}, status=status.HTTP_200_OK)
 
     @staticmethod
     def _create_reset_link(request, token):

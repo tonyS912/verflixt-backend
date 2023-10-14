@@ -9,6 +9,8 @@ class Video(models.Model):
     description = models.TextField()  # description about the Videostory == required, weil black=True an der fehlen würde
     video_file = models.FileField(upload_to='videos', blank=False, null=False)  # Uploadfield for the Video, it can be empty and null. that makes them optional
     video_file_480p = models.FileField(upload_to='videos', blank=True, null=True)  #  the same video above but different quality
+    video_file_720p = models.FileField(upload_to='videos', blank=True, null=True)  #  the same video above but different quality
+    video_file_1080p = models.FileField(upload_to='videos', blank=True, null=True)  #  the same video above but different quality
 
     def __str__(self) -> str:
         return self.title  # returns the title for the backend view

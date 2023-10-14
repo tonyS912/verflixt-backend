@@ -19,6 +19,9 @@ class VideoAdmin(ImportExportModelAdmin):
         "created_from",
         "description",
         "video_file",
+        "video_file_480p",
+        "video_file_720p",
+        "video_file_1080p"
     )  # Field can be edited
 
 

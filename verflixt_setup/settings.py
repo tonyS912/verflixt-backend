@@ -22,6 +22,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 CORS_ALLOWED_ORIGINS = [
     "http://localhost",
     "http://127.0.0.1",
+    os.environ.get("HOST_IP")
 ]
 
 # Application definition

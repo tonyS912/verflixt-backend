@@ -17,8 +17,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-backend-server = os.environ.get("HOST_IP")
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', backend-server]
+VSERVER = os.environ.get("VSERVER")
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'verflixt-back.tony-schiller.com', VSERVER]
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost",

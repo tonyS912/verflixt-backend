@@ -85,8 +85,8 @@ WSGI_APPLICATION = 'verflixt_setup.wsgi.application'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_PORT = os.environ.get('EMAIL_PORT')
-EMAIL_USE_TLS = False
-EMAIL_USE_SSL = True
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
 EMAIL_HOST = os.environ.get('EMAIL_SERVER', 'localhost')
 EMAIL_HOST_USER = os.environ.get('EMAIL_SENDER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PARSE')

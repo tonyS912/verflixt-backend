@@ -111,9 +111,9 @@ class PasswordResetView(APIView):
         serializer = PasswordResetSerializer(data=request.data)
         if serializer.is_valid():
             user_data = serializer.save()
-            reset_link = PasswordResetView._create_reset_link(request, user_data['token'])
+            reset_link = self._create_reset_link(request, user_data['token'])
             email_sender = os.environ.get("EMAIL_SENDER")
-            PasswordResetView._send_reset_email(user_data['user'].email, reset_link, email_sender)
+            self._send_reset_email(user_data['user'].email, reset_link, email_sender)
             return Response({"message": "Password reset email was sent."}, status=status.HTTP_200_OK)
 
     def _create_reset_link(self, request, token):

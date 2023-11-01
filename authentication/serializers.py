@@ -180,7 +180,7 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         return data
 
     def save(self):
-        token = self.validated_data["token"]
+        token = self.data["token"]
         user = CustomUser.objects.get(auth_token=token[0])
         user.set_password(self.validated_data["password"])
         user.save()

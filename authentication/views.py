@@ -106,8 +106,8 @@ class LogoutView(APIView):
 
 
 class PasswordResetView(APIView):
-    @staticmethod
-    def post(request):
+
+    def post(self, request):
         serializer = PasswordResetSerializer(data=request.data)
         if serializer.is_valid():
             user_data = serializer.save()
@@ -116,13 +116,11 @@ class PasswordResetView(APIView):
             PasswordResetView._send_reset_email(user_data['user'].email, reset_link, email_sender)
             return Response({"message": "Password reset email was sent."}, status=status.HTTP_200_OK)
 
-    @staticmethod
-    def _create_reset_link(request, token):
+    def _create_reset_link(self, request, token):
         domain = get_current_site(request).domain
         return f"https://{domain}/authentication/api/reset/password/confirm/{token}/"
 
-    @staticmethod
-    def _send_reset_email(email, reset_link, email_sender):
+    def _send_reset_email(self, email, reset_link, email_sender):
         send_mail(
             "Reset your password",
             f'Click here to reset your password --> <a href="{reset_link}">',

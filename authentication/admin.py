@@ -29,8 +29,3 @@ class CustomUserAdmin(admin.ModelAdmin):
         "phone",
         "address"
     ]
-
-    fields = (
-        "email",
-        "password"
-    )

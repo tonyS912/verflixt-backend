@@ -136,8 +136,7 @@ class PasswordResetConfirmView(APIView):
     serializer_class = PasswordResetConfirmSerializer
 
     def post(self, request, token):
-        request.data['token'] = token
-        serializer = PasswordResetConfirmSerializer(data=request.data)
+        serializer = PasswordResetConfirmSerializer(data=request.data, context={"token": token})
         if serializer.is_valid():
             return Response(serializer.save(), status=200)
         else:

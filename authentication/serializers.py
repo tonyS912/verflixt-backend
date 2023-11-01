@@ -3,6 +3,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
+from django.shortcuts import get_object_or_404
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.models import User
@@ -184,5 +185,6 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         user = CustomUser.objects.get(auth_token=token)
         user.set_password(self.validated_data["password"])
         user.save()
-        token.delete()
+        token_to_delete = get_object_or_404(Token, key=token)
+        token_to_delete.delete()
         return {"detail": "Password reset successful."}

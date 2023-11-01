@@ -156,7 +156,6 @@ class CurrentUserSerializer(serializers.ModelSerializer):
 class PasswordResetSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
-    @staticmethod
     def validate_email(value):
         try:
             get_user_model().objects.get(email=value)
@@ -167,9 +166,8 @@ class PasswordResetSerializer(serializers.Serializer):
     def save(self):
         email = self.validated_data["email"]
         user = get_user_model().objects.get(email=email)
-        token = default_token_generator.make_token(user)
-        uid = urlsafe_base64_encode(force_bytes(user.pk))
-        result = {"uid": uid, "token": token, "user": user}
+        token = Token.objects.get_or_create(user=user)
+        result = {"token": token, "user": user}
         return result
 
 
@@ -183,7 +181,7 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         return data
 
     def save(self):
-        user = CustomUser.objects.get(auth_token=self.validated_data["token"])
+        user = CustomUser.objects.get(auth_token=self.data.get["token"])
         if default_token_generator.check_token(user, self.validated_data["token"]):
             user.set_password(self.validated_data["password"])
             user.save()

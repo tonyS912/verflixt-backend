@@ -184,4 +184,5 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         user = CustomUser.objects.get(auth_token=token)
         user.set_password(self.validated_data["password"])
         user.save()
+        token.delete()
         return {"detail": "Password reset successful."}

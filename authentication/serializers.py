@@ -3,8 +3,8 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
-from django.utils.encoding import force_bytes, force_str
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.models import User
 
 
@@ -181,8 +181,7 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         return data
 
     def save(self):
-        uid = force_str(urlsafe_base64_decode(self.validated_data["uid"]))
-        user = get_user_model().objects.get(pk=uid)
+        user = get_user_model().objects.get(pk=self.validated_data["uid"])
         if default_token_generator.check_token(user, self.validated_data["token"]):
             user.set_password(self.validated_data["password1"])
             user.save()

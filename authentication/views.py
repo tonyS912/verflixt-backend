@@ -135,8 +135,7 @@ class PasswordResetConfirmView(APIView):
     permission_classes = (AllowAny,)
     serializer_class = PasswordResetConfirmSerializer
 
-    @staticmethod
-    def post(request):
+    def post(self, request):
         serializer = PasswordResetConfirmSerializer(data=request.data)
         if serializer.is_valid():
             return Response(serializer.save(), status=200)

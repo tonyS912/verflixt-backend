@@ -179,7 +179,7 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
             raise serializers.ValidationError("Passwords do not match.")
         return data
 
-    def save(self):
+    def save(self, data):
         token = self.data["token"]
         user = CustomUser.objects.get(auth_token=token[0])
         user.set_password(self.validated_data["password"])

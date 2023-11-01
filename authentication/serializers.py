@@ -156,7 +156,7 @@ class CurrentUserSerializer(serializers.ModelSerializer):
 class PasswordResetSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
-    def validate_email(value):
+    def validate_email(self, value):
         try:
             get_user_model().objects.get(email=value)
             return value

@@ -1,7 +1,9 @@
-from django.contrib.auth import logout
+from django.contrib.auth import logout, get_user_model
+from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from rest_framework import status
+from rest_framework.authtoken.models import Token
 
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -75,17 +77,28 @@ class ConfirmEmailView(APIView):
 
 
 class LoginView(APIView):
-    queryset = CustomUser.objects.all()
-    permission_classes = (AllowAny,)
     serializer_class = LoginSerializer
 
     @staticmethod
-    def post(request):
-        serializer = LoginSerializer(data=request.data)
-        if serializer.is_valid():
-            return Response(serializer.validated_data, status=200)
-        else:
-            return Response({"error": serializer.errors}, status=401)
+    def get(self, request):
+        users = User.objects.all()
+        serializer = LoginSerializer(users, many=True)
+        return Response(serializer.data)
+
+    @staticmethod
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        user_data = serializer.validated_data
+        user = get_user_model().objects.get(email=user_data['email'])
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({
+            'token': token.key,
+            'user_id': user.pk,
+            'email': user.email,
+            'username': user.username
+        })
 
 
 class LogoutView(APIView):

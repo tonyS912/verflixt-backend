@@ -21,7 +21,7 @@ VSERVER = os.environ.get("VSERVER")
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'verflixt-back.tony-schiller.com', VSERVER]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://verflixt.tony-schiller.com"
+    "https://verflixt.tony-schiller.com",
     "https://localhost",
     "http://localhost:5173",
     "http://127.0.0.1",

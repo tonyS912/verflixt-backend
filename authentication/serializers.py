@@ -7,7 +7,6 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.contrib.auth.models import User
 
-
 from rest_framework.authtoken.models import Token
 from rest_framework import serializers
 
@@ -181,10 +180,14 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
         return data
 
     def save(self):
-        user = CustomUser.objects.get(auth_token=self.validated_data["token[0]"])
-        # if default_token_generator.check_token(user, self.validated_data["token"]):
-        #     user.set_password(self.validated_data["password"])
-        #     user.save()
-        #     return {"detail": "Password reset successful."}
-        # else:
-        #     raise serializers.ValidationError("Invalid token.")
+        token = self.validated_data["token"]
+        user = CustomUser.objects.get(auth_token=token[0])
+        user.set_password(self.validated_data["password"])
+        user.save()
+
+    # if default_token_generator.check_token(user, self.validated_data["token"]):
+    #     user.set_password(self.validated_data["password"])
+    #     user.save()
+    #     return {"detail": "Password reset successful."}
+    # else:
+    #     raise serializers.ValidationError("Invalid token.")

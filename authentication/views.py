@@ -1,5 +1,4 @@
 from django.contrib.auth import logout, get_user_model
-from django.contrib.auth.models import User
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import send_mail
 from rest_framework import status
@@ -80,7 +79,7 @@ class LoginView(APIView):
     serializer_class = LoginSerializer
 
     def get(self, request):
-        users = User.objects.all()
+        users = CustomUser.objects.all()
         serializer = LoginSerializer(users, many=True)
         return Response(serializer.data)
 

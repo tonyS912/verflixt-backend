@@ -79,13 +79,11 @@ class ConfirmEmailView(APIView):
 class LoginView(APIView):
     serializer_class = LoginSerializer
 
-    @staticmethod
     def get(self, request):
         users = User.objects.all()
         serializer = LoginSerializer(users, many=True)
         return Response(serializer.data)
 
-    @staticmethod
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)

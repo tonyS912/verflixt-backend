@@ -136,9 +136,7 @@ class PasswordResetConfirmView(APIView):
     serializer_class = PasswordResetConfirmSerializer
 
     def post(self, request, token):
-        user = request.user
-        uid = user.pk
-        context_data = {"token": token, "uid": uid}
+        context_data = {"token": token}
 
         serializer = PasswordResetConfirmSerializer(data=request.data, context=context_data)
         if serializer.is_valid():

@@ -9,8 +9,9 @@ from .serializers import VideoSerializer
 #  TODO: Create test for it
 
 
-#  @permission_classes(IsAuthenticated)
 class VideoViewSet(viewsets.ModelViewSet):
-    #  authentication_classes = [TokenAuthentication]
-    queryset = Video.objects.all()
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
     serializer_class = VideoSerializer
+
+    queryset = Video.objects.all()

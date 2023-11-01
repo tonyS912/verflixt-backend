@@ -183,7 +183,7 @@ class PasswordResetConfirmSerializer(serializers.Serializer):
     def save(self):
         user = get_user_model().objects.get(pk=self.validated_data["uid"])
         if default_token_generator.check_token(user, self.validated_data["token"]):
-            user.set_password(self.validated_data["password1"])
+            user.set_password(self.validated_data["password"])
             user.save()
             return {"detail": "Password reset successful."}
         else:

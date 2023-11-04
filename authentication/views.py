@@ -117,8 +117,8 @@ class PasswordResetView(APIView):
             return Response({"message": "Password reset email was sent."}, status=status.HTTP_200_OK)
 
     def _create_reset_link(self, request, token):
-        domain = get_current_site(request).domain
-        return f"https://{domain}/authentication/api/reset/password/confirm/{token[0]}/"
+        domain = os.environ.get("FRONTEND_DOMAIN")
+        return f"https://{domain}/resetPassword/?token={token[0]}/"
 
     def _send_reset_email(self, email, reset_link, email_sender):
         send_mail(

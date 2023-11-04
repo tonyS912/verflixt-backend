@@ -42,8 +42,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('Passwords do not match.')
         return attrs
 
-    @staticmethod
-    def validate_password(value):
+    def validate_password(self, value):
         """
         Validates if the Password is a secure password, comes from Django
 
@@ -59,8 +58,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(e.messages)
         return value
 
-    @staticmethod
-    def validate_email(value):
+    def validate_email(self, value):
         """
         Validates the email address, if it can a possible email address
 
@@ -100,8 +98,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class EmailConfirmSerializer(serializers.Serializer):
     token = serializers.CharField()
 
-    @staticmethod
-    def validate_token(value):
+    def validate_token(self, value):
         """
         Activate the user if Token is correct
 
@@ -124,8 +121,7 @@ class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField(required=True)
     password = serializers.CharField(write_only=True, required=True)
 
-    @staticmethod
-    def authenticate_by_email(email, password):
+    def authenticate_by_email(self, email, password):
         user = get_user_model()
         try:
             user = user.objects.get(email=email)
